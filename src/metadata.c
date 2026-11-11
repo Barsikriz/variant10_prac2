@@ -2,6 +2,7 @@
 
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 static const char *spaces(const char *p)
@@ -115,7 +116,7 @@ static int newer(const char *a, const char *b)
     return 0;
 }
 
-int metadata_print(char *text)
+int metadata_each(char *text, int normal_only, MetadataVisitor visit, void *context)
 {
     const char *selected = NULL;
     for (char *line = text; line; ) {
@@ -159,10 +160,37 @@ int metadata_print(char *text)
             fprintf(stderr, "Invalid dependency entry\n");
             return -1;
         }
-        printf("%.*s\n", (int)(name_end - name - 2), name + 1);
+        const char *kind = field(p, "kind");
+        const char *optional = field(p, "optional");
+        int normal = !kind || strncmp(kind, "null", 4) == 0
+            || strncmp(kind, "\"normal\"", 8) == 0;
+        int enabled = !optional || strncmp(optional, "false", 5) == 0;
+
+        if (!normal_only || (normal && enabled)) {
+            size_t length = (size_t)(name_end - name - 2);
+            char *dependency = malloc(length + 1);
+            if (!dependency) return -1;
+            memcpy(dependency, name + 1, length);
+            dependency[length] = '\0';
+            int result = visit(dependency, context);
+            free(dependency);
+            if (result != 0) return -1;
+        }
         p = spaces(end);
         if (*p == ',') p = spaces(p + 1);
         else if (*p != ']') return -1;
     }
     return 0;
+}
+
+static int print_dependency(const char *name, void *context)
+{
+    (void)context;
+    puts(name);
+    return 0;
+}
+
+int metadata_print(char *text)
+{
+    return metadata_each(text, 0, print_dependency, NULL);
 }

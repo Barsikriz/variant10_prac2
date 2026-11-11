@@ -1,11 +1,10 @@
-#include "http.h"
-#include "index.h"
-#include "metadata.h"
-#include "registry.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "graph.h"
+#include "registry_graph.h"
 
 typedef struct {
   const char *package;
@@ -20,7 +19,6 @@ int main(int argc, char *argv[]) {
 
   for (int i = 1; i < argc; ++i) {
     const char *option = argv[i];
-
     bool *flag = NULL;
 
     if (strcmp(option, "--test") == 0) {
@@ -34,13 +32,19 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Duplicate option: %s\n", option);
         return 1;
       }
-
       *flag = true;
       continue;
     }
 
-    if (strcmp(option, "--package") != 0 && strcmp(option, "--repo") != 0 &&
-        strcmp(option, "--out") != 0) {
+    const char **target = NULL;
+
+    if (strcmp(option, "--package") == 0) {
+      target = &config.package;
+    } else if (strcmp(option, "--repo") == 0) {
+      target = &config.repo;
+    } else if (strcmp(option, "--out") == 0) {
+      target = &config.out;
+    } else {
       fprintf(stderr, "Unknown option: %s\n", option);
       return 1;
     }
@@ -51,24 +55,12 @@ int main(int argc, char *argv[]) {
       return 1;
     }
 
-    const char *value = argv[++i];
-
-    const char **target = NULL;
-
-    if (strcmp(option, "--package") == 0) {
-      target = &config.package;
-    } else if (strcmp(option, "--repo") == 0) {
-      target = &config.repo;
-    } else {
-      target = &config.out;
-    }
-
     if (*target != NULL) {
       fprintf(stderr, "Duplicate option: %s\n", option);
       return 1;
     }
 
-    *target = value;
+    *target = argv[++i];
   }
 
   if (config.package == NULL) {
@@ -81,13 +73,10 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  if (config.repo == NULL) {
+  if (config.repo == NULL)
     config.repo = "https://index.crates.io";
-  }
-
-  if (config.out == NULL) {
+  if (config.out == NULL)
     config.out = "graph.svg";
-  }
 
   for (const char *p = config.package; *p != '\0'; ++p) {
     bool upper = *p >= 'A' && *p <= 'Z';
@@ -130,38 +119,45 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  printf("package=%s\n", config.package);
-  printf("repo=%s\n", config.repo);
-  printf("test=%s\n", config.test ? "true" : "false");
-  printf("ascii=%s\n", config.ascii ? "true" : "false");
-  printf("out=%s\n", config.out);
+  Graph graph = {0};
+  size_t root;
 
-  if (!config.test) {
-    char url[2048];
-
-    if (registry_url(config.repo, config.package, url, sizeof(url)) != 0) {
-      fprintf(stderr, "Cannot construct registry URL\n");
+  if (config.test) {
+    if (graph_load(&graph, config.repo) != 0)
       return 1;
-    }
-
-    if (download_index(url) != 0) {
-      return 1;
-    }
-
-    char *text = index_read(INDEX_FILE);
-
-    if (text == NULL) {
-      return 1;
-    }
-
-    int result = metadata_print(text);
-
-    free(text);
-
-    if (result != 0) {
-      return 1;
-    }
+    root = graph_find(&graph, config.package);
+  } else {
+    root = graph_node(&graph, config.package);
   }
 
+  if (root == GRAPH_NONE) {
+    fprintf(stderr, "Cannot select package: %s\n", config.package);
+    graph_free(&graph);
+    return 1;
+  }
+
+  size_t *order = NULL;
+  size_t count = 0;
+  int result;
+
+  if (config.test) {
+    result = graph_bfs(&graph, root, &order, &count);
+  } else {
+    result = graph_bfs_expand(&graph, root, registry_expand, config.repo,
+                              &order, &count);
+  }
+
+  if (result != 0) {
+    fprintf(stderr, "Cannot build dependency graph\n");
+    graph_free(&graph);
+    return 1;
+  }
+
+  for (size_t i = 0; i < count; ++i) {
+    printf("%s\n", graph.nodes[order[i]].name);
+  }
+
+  free(order);
+  graph_free(&graph);
   return 0;
 }
