@@ -1,5 +1,10 @@
+#include "http.h"
+#include "index.h"
+#include "metadata.h"
+#include "registry.h"
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 typedef struct {
@@ -130,6 +135,33 @@ int main(int argc, char *argv[]) {
   printf("test=%s\n", config.test ? "true" : "false");
   printf("ascii=%s\n", config.ascii ? "true" : "false");
   printf("out=%s\n", config.out);
+
+  if (!config.test) {
+    char url[2048];
+
+    if (registry_url(config.repo, config.package, url, sizeof(url)) != 0) {
+      fprintf(stderr, "Cannot construct registry URL\n");
+      return 1;
+    }
+
+    if (download_index(url) != 0) {
+      return 1;
+    }
+
+    char *text = index_read(INDEX_FILE);
+
+    if (text == NULL) {
+      return 1;
+    }
+
+    int result = metadata_print(text);
+
+    free(text);
+
+    if (result != 0) {
+      return 1;
+    }
+  }
 
   return 0;
 }
