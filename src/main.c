@@ -12,6 +12,7 @@ typedef struct {
   const char *out;
   bool test;
   bool ascii;
+  bool reverse;
 } Config;
 
 int main(int argc, char *argv[]) {
@@ -25,6 +26,8 @@ int main(int argc, char *argv[]) {
       flag = &config.test;
     } else if (strcmp(option, "--ascii") == 0) {
       flag = &config.ascii;
+    } else if (strcmp(option, "--reverse") == 0) {
+      flag = &config.reverse;
     }
 
     if (flag != NULL) {
@@ -119,6 +122,11 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
+  if (config.reverse && !config.test) {
+    fprintf(stderr, "Reverse mode requires --test --repo FILE\n");
+    return 1;
+  }
+
   Graph graph = {0};
   size_t root;
 
@@ -132,6 +140,11 @@ int main(int argc, char *argv[]) {
 
   if (root == GRAPH_NONE) {
     fprintf(stderr, "Cannot select package: %s\n", config.package);
+    graph_free(&graph);
+    return 1;
+  }
+  if (config.reverse && graph_reverse(&graph) != 0) {
+    fprintf(stderr, "Cannot reverse graph\n");
     graph_free(&graph);
     return 1;
   }
@@ -154,6 +167,10 @@ int main(int argc, char *argv[]) {
   }
 
   for (size_t i = 0; i < count; ++i) {
+    if (config.reverse && order[i] == root) {
+      continue;
+    }
+
     printf("%s\n", graph.nodes[order[i]].name);
   }
 

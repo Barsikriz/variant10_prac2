@@ -49,3 +49,23 @@ powershell -ExecutionPolicy Bypass -File .\tests\stage1.ps1
 ```
 
 Each command in this section must report an error and return a nonzero exit code.
+
+## Reverse dependencies
+
+`--reverse` finds direct and transitive consumers in a local test repository.
+This mode requires `--test --repo FILE`.
+
+The complete repository is loaded before every edge is reversed.
+The same iterative BFS then starts from the selected package.
+The root is excluded from the printed consumer list.
+An empty result means that no other package depends on the root.
+
+`graph_reverse` constructs a temporary graph with reversed edges.
+Vertex IDs are preserved. The original graph is replaced after successful construction.
+
+```powershell
+.\depgraph.exe --test --repo tests/graphs/diamond.txt --package D --reverse
+make test-stage4
+```
+
+The example prints B, C, A and X in BFS order.

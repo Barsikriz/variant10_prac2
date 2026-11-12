@@ -28,3 +28,8 @@ test-expand: tests/test_graph_expand.c src/graph.c src/metadata.c src/graph.h sr
 
 test-stage3: depgraph.exe test-graph test-expand
 	powershell -ExecutionPolicy Bypass -File tests/stage3.ps1
+
+.PHONY: test-stage4
+
+test-stage4: test-stage3
+	powershell -ExecutionPolicy Bypass -File tests/stage4.ps1
