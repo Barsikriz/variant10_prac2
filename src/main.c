@@ -1,3 +1,5 @@
+#include "ascii.h"
+#include "render.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -165,13 +167,46 @@ int main(int argc, char *argv[]) {
     graph_free(&graph);
     return 1;
   }
+  size_t output_length = strlen(config.out);
+  char *dot_filename = malloc(output_length + 1);
 
-  for (size_t i = 0; i < count; ++i) {
-    if (config.reverse && order[i] == root) {
-      continue;
+  if (dot_filename == NULL) {
+    fprintf(stderr, "Cannot allocate output filename\n");
+    free(order);
+    graph_free(&graph);
+    return 1;
+  }
+
+  strcpy(dot_filename, config.out);
+  strcpy(dot_filename + output_length - 3, "dot");
+
+  int write_result = graph_write_dot(&graph, order, count, dot_filename);
+
+  if (write_result == 0) {
+    write_result = graph_render_svg(dot_filename, config.out);
+  }
+
+  free(dot_filename);
+
+  if (write_result != 0) {
+    free(order);
+    graph_free(&graph);
+    return 1;
+  }
+  if (config.ascii) {
+    if (graph_print_tree(&graph, order, count) != 0) {
+      free(order);
+      graph_free(&graph);
+      return 1;
     }
+  } else {
+    for (size_t i = 0; i < count; ++i) {
+      if (config.reverse && order[i] == root) {
+        continue;
+      }
 
-    printf("%s\n", graph.nodes[order[i]].name);
+      printf("%s\n", graph.nodes[order[i]].name);
+    }
   }
 
   free(order);

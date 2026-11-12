@@ -1,0 +1,2 @@
+csv-core v0.1.13
+└── memchr v2.8.3

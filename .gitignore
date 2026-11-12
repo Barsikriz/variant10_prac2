@@ -1,4 +1,6 @@
 *.exe
+*.dot
+*.svg
 *.o
 build/
 compile_commands.json

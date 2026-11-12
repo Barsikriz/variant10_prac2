@@ -33,3 +33,6 @@ test-stage3: depgraph.exe test-graph test-expand
 
 test-stage4: test-stage3
 	powershell -ExecutionPolicy Bypass -File tests/stage4.ps1
+
+
+include stage5.mk

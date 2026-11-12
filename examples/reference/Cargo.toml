@@ -1,0 +1,8 @@
+[package]
+name = "depgraph-reference"
+version = "0.1.0"
+edition = "2021"
+[dependencies]
+csv = "1"
+csv-core = "0.1"
+itoa = "1"

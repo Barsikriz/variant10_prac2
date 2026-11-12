@@ -1,0 +1,603 @@
+{
+  "csv": {
+    "name": "csv",
+    "vers": "1.4.0",
+    "yanked": false,
+    "deps": [
+      {
+        "name": "bstr",
+        "req": "^1.7.0",
+        "features": [
+          "alloc",
+          "serde"
+        ],
+        "optional": false,
+        "default_features": false,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "csv-core",
+        "req": "^0.1.11",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "normal"
+      },
+      {
+        "name": "itoa",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "normal"
+      },
+      {
+        "name": "ryu",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "normal"
+      },
+      {
+        "name": "serde",
+        "req": "^1.0.221",
+        "features": [
+          "derive"
+        ],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "serde_core",
+        "req": "^1.0.221",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "normal"
+      }
+    ]
+  },
+  "csv-core": {
+    "name": "csv-core",
+    "vers": "0.1.13",
+    "yanked": false,
+    "deps": [
+      {
+        "name": "arrayvec",
+        "req": "^0.5",
+        "features": [],
+        "optional": false,
+        "default_features": false,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "memchr",
+        "req": "^2",
+        "features": [],
+        "optional": false,
+        "default_features": false,
+        "target": null,
+        "kind": "normal"
+      }
+    ]
+  },
+  "itoa": {
+    "name": "itoa",
+    "vers": "1.0.19",
+    "yanked": false,
+    "deps": [
+      {
+        "name": "criterion",
+        "req": "^0.8",
+        "features": [],
+        "optional": false,
+        "default_features": false,
+        "target": "cfg(not(miri))",
+        "kind": "dev"
+      },
+      {
+        "name": "no-panic",
+        "req": "^0.1",
+        "features": [],
+        "optional": true,
+        "default_features": true,
+        "target": null,
+        "kind": "normal"
+      }
+    ]
+  },
+  "ryu": {
+    "name": "ryu",
+    "vers": "1.0.23",
+    "yanked": false,
+    "deps": [
+      {
+        "name": "criterion",
+        "req": "^0.8",
+        "features": [],
+        "optional": false,
+        "default_features": false,
+        "target": "cfg(not(miri))",
+        "kind": "dev"
+      },
+      {
+        "name": "no-panic",
+        "req": "^0.1",
+        "features": [],
+        "optional": true,
+        "default_features": true,
+        "target": null,
+        "kind": "normal"
+      },
+      {
+        "name": "num_cpus",
+        "req": "^1.8",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "rand",
+        "req": "^0.10",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "rand_core",
+        "req": "^0.10",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "rand_xorshift",
+        "req": "^0.5",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      }
+    ]
+  },
+  "serde_core": {
+    "name": "serde_core",
+    "vers": "1.0.229",
+    "yanked": false,
+    "deps": [
+      {
+        "name": "serde",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "serde_derive",
+        "req": "=1.0.229",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": "cfg(any())",
+        "kind": "normal"
+      },
+      {
+        "name": "serde_derive",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      }
+    ]
+  },
+  "memchr": {
+    "name": "memchr",
+    "vers": "2.8.3",
+    "yanked": false,
+    "deps": [
+      {
+        "name": "core",
+        "req": "^1.0.0",
+        "features": [],
+        "optional": true,
+        "default_features": true,
+        "target": null,
+        "kind": "normal",
+        "package": "rustc-std-workspace-core"
+      },
+      {
+        "name": "log",
+        "req": "^0.4.20",
+        "features": [],
+        "optional": true,
+        "default_features": true,
+        "target": null,
+        "kind": "normal"
+      },
+      {
+        "name": "quickcheck",
+        "req": "^1.0.3",
+        "features": [],
+        "optional": false,
+        "default_features": false,
+        "target": null,
+        "kind": "dev"
+      }
+    ]
+  },
+  "serde_derive": {
+    "name": "serde_derive",
+    "vers": "1.0.229",
+    "yanked": false,
+    "deps": [
+      {
+        "name": "proc-macro2",
+        "req": "^1.0.74",
+        "features": [
+          "proc-macro"
+        ],
+        "optional": false,
+        "default_features": false,
+        "target": null,
+        "kind": "normal"
+      },
+      {
+        "name": "quote",
+        "req": "^1.0.35",
+        "features": [
+          "proc-macro"
+        ],
+        "optional": false,
+        "default_features": false,
+        "target": null,
+        "kind": "normal"
+      },
+      {
+        "name": "serde",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "syn",
+        "req": "^3",
+        "features": [
+          "clone-impls",
+          "derive",
+          "parsing",
+          "printing",
+          "proc-macro"
+        ],
+        "optional": false,
+        "default_features": false,
+        "target": null,
+        "kind": "normal"
+      }
+    ]
+  },
+  "proc-macro2": {
+    "name": "proc-macro2",
+    "vers": "1.0.107",
+    "yanked": false,
+    "deps": [
+      {
+        "name": "flate2",
+        "req": "^1.0",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "quote",
+        "req": "^1.0",
+        "features": [],
+        "optional": false,
+        "default_features": false,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "rayon",
+        "req": "^1.0",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "rustversion",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "tar",
+        "req": "^0.4",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "unicode-ident",
+        "req": "^1.0",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "normal"
+      }
+    ]
+  },
+  "quote": {
+    "name": "quote",
+    "vers": "1.0.47",
+    "yanked": false,
+    "deps": [
+      {
+        "name": "proc-macro2",
+        "req": "^1.0.80",
+        "features": [],
+        "optional": false,
+        "default_features": false,
+        "target": null,
+        "kind": "normal"
+      },
+      {
+        "name": "rustversion",
+        "req": "^1.0",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "trybuild",
+        "req": "^1.0.108",
+        "features": [
+          "diff"
+        ],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      }
+    ]
+  },
+  "syn": {
+    "name": "syn",
+    "vers": "3.0.10",
+    "yanked": false,
+    "deps": [
+      {
+        "name": "anyhow",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "automod",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "flate2",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": "cfg(not(miri))",
+        "kind": "dev"
+      },
+      {
+        "name": "insta",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "proc-macro2",
+        "req": "^1.0.91",
+        "features": [],
+        "optional": false,
+        "default_features": false,
+        "target": null,
+        "kind": "normal"
+      },
+      {
+        "name": "quote",
+        "req": "^1.0.35",
+        "features": [],
+        "optional": true,
+        "default_features": false,
+        "target": null,
+        "kind": "normal"
+      },
+      {
+        "name": "rayon",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": "cfg(not(miri))",
+        "kind": "dev"
+      },
+      {
+        "name": "ref-cast",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "reqwest",
+        "req": "^0.13",
+        "features": [
+          "blocking"
+        ],
+        "optional": false,
+        "default_features": true,
+        "target": "cfg(not(miri))",
+        "kind": "dev"
+      },
+      {
+        "name": "rustversion",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "syn-test-suite",
+        "req": "^0",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "tar",
+        "req": "^0.4.16",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": "cfg(not(miri))",
+        "kind": "dev"
+      },
+      {
+        "name": "termcolor",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "unicode-ident",
+        "req": "^1",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "normal"
+      },
+      {
+        "name": "walkdir",
+        "req": "^2.3.2",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": "cfg(not(miri))",
+        "kind": "dev"
+      }
+    ]
+  },
+  "unicode-ident": {
+    "name": "unicode-ident",
+    "vers": "1.0.27",
+    "yanked": false,
+    "deps": [
+      {
+        "name": "criterion",
+        "req": "^0.8",
+        "features": [],
+        "optional": false,
+        "default_features": false,
+        "target": "cfg(not(miri))",
+        "kind": "dev"
+      },
+      {
+        "name": "fst",
+        "req": "^0.4",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "rand",
+        "req": "^0.10",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "roaring",
+        "req": "^0.11",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "ucd-trie",
+        "req": "^0.1",
+        "features": [],
+        "optional": false,
+        "default_features": false,
+        "target": null,
+        "kind": "dev"
+      },
+      {
+        "name": "unicode-xid",
+        "req": "^0.2.6",
+        "features": [],
+        "optional": false,
+        "default_features": true,
+        "target": null,
+        "kind": "dev"
+      }
+    ]
+  }
+}
